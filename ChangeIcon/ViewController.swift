@@ -10,51 +10,25 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     @IBAction func changeToPurpleAction(_ sender: UIButton) {
-        if !checkSupportChangeIcon() {
-            return
-        }
-        if !UIApplication.shared.supportsAlternateIcons {
-            return
-        }
         changeToIcon("purpleicon")
     }
     @IBAction func changeDefaultAction(_ sender: UIButton) {
-        
-        if !checkSupportChangeIcon() {
-            return
-        }
-        if !UIApplication.shared.supportsAlternateIcons {
-            return
-        }
         changeToIcon(nil)
     }
 
     @IBAction func changeiconAction(_ sender: UIButton) {
-        if !checkSupportChangeIcon() {
-            return
-        }
-        if !UIApplication.shared.supportsAlternateIcons {
-            aler(str: "不支持备用icon")
-            return
-        }
         changeToIcon("newicon")
     }
     //MARK: check system version
     func checkSupportChangeIcon() -> Bool {
-        let deviceVersion = UIDevice.current.systemVersion
-        if deviceVersion.contains("10.3") {
-            return true
+        if #available(iOS 10.3, *) {  //判断系统版本是否是10.3+
+            if UIApplication.shared.supportsAlternateIcons {
+                return true;
+            }else {
+                aler(str: "不支持备用icon")
+                return false;
+            }
         }
         return false
     }
